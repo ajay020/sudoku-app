@@ -84,4 +84,16 @@ function isBoxValid(
   return true;
 }
 
-export default { isValidMove, isValidCell };
+const countEmptyCells = (grid: number[][]) => {
+  let count = 0;
+  for (let i = 0; i < 9; i++) {
+    for (let j = 0; j < 9; j++) {
+      if (grid[i][j] === 0) {
+        count++;
+      }
+    }
+  }
+  return count;
+};
+
+export default { isValidMove, isValidCell, countEmptyCells };

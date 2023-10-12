@@ -10,7 +10,7 @@ export function generateSudokuPuzzle(): SudokuGrid {
   fillRemaining(grid);
 
   // Remove some numbers to create the puzzle
-  removeNumbers(grid, 40); // Adjust the number of removed numbers as desired
+  removeNumbers(grid, 4); // Adjust the number of removed numbers as desired
 
   return grid;
 }
