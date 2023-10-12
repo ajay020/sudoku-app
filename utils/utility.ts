@@ -26,4 +26,62 @@ function isNumberInSubgrid(
   return false;
 }
 
-export default { isValidMove };
+function isValidCell(grid: number[][], row: number, col: number) {
+  return (
+    isRowValid(grid[row]) &&
+    isColumnValid(grid, col) &&
+    isBoxValid(grid, row, col)
+  );
+}
+
+function isRowValid(row: number[]): boolean {
+  const seen = new Set<number>();
+  for (const num of row) {
+    if (seen.has(Math.abs(num))) {
+      return false;
+    }
+    if (num !== 0) {
+      seen.add(num);
+    }
+  }
+  return true;
+}
+
+function isColumnValid(grid: number[][], colIndex: number): boolean {
+  const seen = new Set<number>();
+  for (let i = 0; i < 9; i++) {
+    const num = Math.abs(grid[i][colIndex]);
+    if (seen.has(num)) {
+      return false;
+    }
+    if (num !== 0) {
+      seen.add(num);
+    }
+  }
+  return true;
+}
+
+function isBoxValid(
+  grid: number[][],
+  rowIndex: number,
+  colIndex: number
+): boolean {
+  let r = rowIndex - (rowIndex % 3);
+  let c = colIndex - (colIndex % 3);
+
+  const seen = new Set<number>();
+  for (let i = r; i < r + 3; i++) {
+    for (let j = c; j < c + 3; j++) {
+      const num = Math.abs(grid[i][j]);
+      if (seen.has(num)) {
+        return false;
+      }
+      if (num !== 0) {
+        seen.add(num);
+      }
+    }
+  }
+  return true;
+}
+
+export default { isValidMove, isValidCell };
