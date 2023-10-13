@@ -1,6 +1,35 @@
 type SudokuGrid = number[][];
 
-export function generateSudokuPuzzle(): SudokuGrid {
+export function generateSudokuPuzzle(level: "1" | "2" | "3") {
+  const completeGrid = generateCompleteSudokuGrid();
+  // Determine the number of cells to remove based on difficulty
+  let cellsToRemove: number = getNumberToBeRemovedByLevel(level);
+  removeNumbers(completeGrid, cellsToRemove);
+
+  return completeGrid;
+}
+
+function getNumberToBeRemovedByLevel(level: string) {
+  let cellsToRemove: number;
+  switch (level) {
+    case "1":
+      return (cellsToRemove = 10);
+    case "2":
+      return (cellsToRemove = 12);
+    case "3":
+      return (cellsToRemove = 15);
+    default:
+      return 35;
+  }
+}
+
+/**
+ *
+ * @returns
+ * Generate a grid with numbers
+ */
+
+function generateCompleteSudokuGrid() {
   const grid: SudokuGrid = Array.from({ length: 9 }, () => Array(9).fill(0));
 
   // Fill diagonal subgrids with random numbers
@@ -8,9 +37,6 @@ export function generateSudokuPuzzle(): SudokuGrid {
 
   // Use backtracking to fill the rest of the grid
   fillRemaining(grid);
-
-  // Remove some numbers to create the puzzle
-  removeNumbers(grid, 4); // Adjust the number of removed numbers as desired
 
   return grid;
 }
@@ -121,7 +147,3 @@ function removeNumbers(grid: SudokuGrid, count: number) {
     grid[row][col] = 0;
   }
 }
-
-let x = generateSudokuPuzzle();
-
-console.log(x);
