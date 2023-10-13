@@ -96,4 +96,17 @@ const countEmptyCells = (grid: number[][]) => {
   return count;
 };
 
-export default { isValidMove, isValidCell, countEmptyCells };
+/***
+ * Format second into M:S form
+ *
+ */
+
+const formatTime = (seconds: number) => {
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = seconds % 60;
+  return `${String(minutes).padStart(2, "0")}:${String(
+    remainingSeconds
+  ).padStart(2, "0")}`;
+};
+
+export default { isValidMove, isValidCell, countEmptyCells, formatTime };
