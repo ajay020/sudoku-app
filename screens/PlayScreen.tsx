@@ -78,7 +78,6 @@ const PlayScreen: React.FC = () => {
     if (moveStack.length > 0) {
       // Pop the last move from the stack
       removeLatestMove();
-      setEmptyCellCount((preCount) => preCount + 1);
     }
   };
 
