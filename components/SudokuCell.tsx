@@ -1,5 +1,5 @@
-import React from "react";
-import { TouchableOpacity, Text, StyleSheet } from "react-native";
+import React, { useState, useEffect } from "react";
+import { Animated, TouchableOpacity, Text, StyleSheet } from "react-native";
 import { useTheme } from "../themes/ThemeProvider";
 
 // Define the props for your SudokuCell component, including style props
@@ -25,6 +25,16 @@ const SudokuCell: React.FC<SudokuCellProps> = React.memo(
       backgroundColor: theme.activeColor,
     };
 
+    const [animation] = useState(new Animated.Value(0));
+
+    useEffect(() => {
+      Animated.timing(animation, {
+        toValue: 1,
+        duration: 1000,
+        useNativeDriver: true,
+      }).start();
+    }, []);
+
     return (
       <TouchableOpacity
         style={[
@@ -36,14 +46,15 @@ const SudokuCell: React.FC<SudokuCellProps> = React.memo(
         ]}
         onPress={onPress}
       >
-        <Text
+        <Animated.Text
           style={[
+            { opacity: animation },
             styles.cellText,
             value < 0 ? { color: theme.commonRed } : { color: textColor },
           ]}
         >
           {value < 0 ? value * -1 : value !== 0 ? value.toString() : ""}
-        </Text>
+        </Animated.Text>
       </TouchableOpacity>
     );
   }

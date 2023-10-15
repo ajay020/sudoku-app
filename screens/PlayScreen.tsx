@@ -15,10 +15,9 @@ import useTimer from "../hooks/useTimer";
 import { useTheme } from "../themes/ThemeProvider";
 
 const PlayScreen: React.FC = () => {
-  console.log("PlayScreen render....");
+  //   console.log("PlayScreen render....");
   const route = useRoute<RouteProp<RootStackParamList, "Play">>();
   const { level } = route.params;
-
   const { theme } = useTheme();
 
   const [grid, setGrid] = useState<number[][]>([]);
@@ -26,6 +25,8 @@ const PlayScreen: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
   const [emptyCellCount, setEmptyCellCount] = useState(-1);
   const [loading, setLoading] = useState(false);
+  const [hintCount, setHintCount] = useState(3);
+
   const [isInitialGridInitialized, setIsInitialGridInitialized] =
     useState(false);
   const [selectedCell, setSelectedCell] = useState<{
@@ -92,6 +93,7 @@ const PlayScreen: React.FC = () => {
     // Update the grid and the stack
     setGrid(updatedGrid);
     setMoveStack(updatedStack);
+    setEmptyCellCount((prev) => prev + 1);
   };
 
   const isInitialNumber = (row: number, col: number) => {
@@ -118,7 +120,20 @@ const PlayScreen: React.FC = () => {
 
   const handleHintPress = useCallback(() => {
     // Implement the hint logic here
-  }, []);
+    if (hintCount > 0) {
+      let cell = utility.giveHint(grid);
+
+      let updatedGrid = [...grid];
+      if (cell) {
+        const { row, col, num } = cell;
+        updatedGrid[row][col] = num;
+        setGrid(updatedGrid);
+        decrementEmptyCellCount();
+        updateMoveStack({ row, col });
+        setHintCount((prev) => prev - 1);
+      }
+    }
+  }, [grid]);
 
   // a function to clear the selected cell
   const clearSelectedCell = () => {
@@ -199,6 +214,7 @@ const PlayScreen: React.FC = () => {
         style={[styles.container, { backgroundColor: theme.primaryBackground }]}
       >
         <View style={styles.gridWrapper}>
+          <Text>{emptyCellCount}</Text>
           <InfoHeader level={level} value={value} />
           <SudokuGrid
             grid={grid}
@@ -212,6 +228,7 @@ const PlayScreen: React.FC = () => {
           onUndoPress={handleUndoPress}
           onClearPress={handleClearPress}
           onHintPress={handleHintPress}
+          hintCount={hintCount}
         />
         <NumberSelector onSelectNumber={handleNumberSelection} />
       </View>

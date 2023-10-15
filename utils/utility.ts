@@ -109,4 +109,27 @@ const formatTime = (seconds: number) => {
   ).padStart(2, "0")}`;
 };
 
-export default { isValidMove, isValidCell, countEmptyCells, formatTime };
+function giveHint(grid: number[][]) {
+  console.log({ grid });
+  for (let row = 0; row < 9; row++) {
+    for (let col = 0; col < 9; col++) {
+      if (grid && grid[row][col] === 0) {
+        for (let num = 1; num <= 9; num++) {
+          if (grid && isValidMove(grid, row, col, num)) {
+            // console.log({ row, col, num });
+            return { row, col, num };
+          }
+        }
+      }
+    }
+  }
+  return null;
+}
+
+export default {
+  isValidMove,
+  isValidCell,
+  countEmptyCells,
+  formatTime,
+  giveHint,
+};

@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useMemo, useEffect } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Animated } from "react-native";
 
 import SudokuCell from "./SudokuCell";
 
