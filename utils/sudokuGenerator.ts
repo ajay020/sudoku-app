@@ -13,11 +13,11 @@ function getNumberToBeRemovedByLevel(level: string) {
   let cellsToRemove: number;
   switch (level) {
     case "1":
-      return (cellsToRemove = 10);
+      return (cellsToRemove = 40);
     case "2":
-      return (cellsToRemove = 12);
+      return (cellsToRemove = 50);
     case "3":
-      return (cellsToRemove = 15);
+      return (cellsToRemove = 60);
     default:
       return 35;
   }
