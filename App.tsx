@@ -1,20 +1,27 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState, useEffect } from "react";
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  useColorScheme,
+} from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+
+import AppNavigation from "./navigators/AppNavigation";
+import HomeNavigation from "./navigators/HomeNavigation";
+import { ThemeProvider } from "./themes/ThemeProvider";
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <ThemeProvider>
+      <NavigationContainer>
+        <HomeNavigation />
+      </NavigationContainer>
+    </ThemeProvider>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+// import { AntDesign } from '@expo/vector-icons';
+/* <AntDesign name="barschart" size={24} color="black" /> */
+//   <Feather name="sun" size={24} color="black" />
